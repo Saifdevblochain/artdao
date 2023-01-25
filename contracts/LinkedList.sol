@@ -125,7 +125,7 @@ abstract contract LinkedList {
         allPositions.totalVoteCount++;
     }
 
-    function deleteFrom(uint tokenId) internal {
+    function remove(uint tokenId) internal {
         Position storage currentPosition = getPosition[tokenId];
 
         uint[] storage currentTokenIds = allPositions.nodes[currentPosition.votes].tokenIds;
