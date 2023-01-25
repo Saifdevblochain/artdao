@@ -35,10 +35,9 @@ contract DaoPublic is Initializable, LinkedList {
         _;
     }
 
-    event PublicVote(address voter, uint index , Position _NFT);
-    event NftApproved(uint index, Position _NFT,uint startTime );
-     
-    event Winner(uint index, Position nftInfo);
+    event PublicVote(address voter, uint index , NFTInfo _NFT);
+    event NftApproved(uint index, NFTInfo _NFT,uint startTime );
+    event Winner(uint index, NFTInfo nftInfo);
 
     function initialize () initializer public {  
         // allPositions.push();
@@ -51,11 +50,11 @@ contract DaoPublic is Initializable, LinkedList {
     }
 
     function addInfo (string calldata uri, address _owner, bool _isApprovedByCommittee )  external onlydaoCommitte {
-       _addInfo(     uri,   _owner,   _isApprovedByCommittee);
+       _addInfo(uri,   _owner,   _isApprovedByCommittee);
     }
 
     function _addInfo(string calldata uri, address _owner, bool _isApprovedByCommittee) internal{
-         nftInfoo[nftIndex] = Position(uri, _owner, nftIndex, 0, 0, _isApprovedByCommittee, false, 0);
+         nftInfoo[nftIndex] = NFTInfo(uri, _owner, nftIndex, 0, 0, _isApprovedByCommittee, false, 0);
         emit NftApproved(nftIndex,nftInfoo[nftIndex],block.timestamp );
         nftIndex++;
     }
@@ -70,7 +69,7 @@ contract DaoPublic is Initializable, LinkedList {
         require( index < nftIndex , " Choose Correct NFT to vote ");
         // nftInfoo[index].votes++;
 
-        Position storage x = nftInfoo[index];
+        NFTInfo storage x = nftInfoo[index];
         if (x.votes == 0) {
             x.votes = x.votes + 1;
 
