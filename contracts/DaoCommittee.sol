@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@openzeppelin\contracts-upgradeable\token\ERC721\IERC721Upgradeable.sol";
+// import "@openzeppelin\contracts-upgradeable\token\ERC721\IERC721Upgradeable.sol";
 import "./IDaoPublic.sol";
 
 
@@ -9,8 +9,7 @@ contract DaoCommittee is Initializable {
     uint public nftIndex;
     uint public committeeMembersCounter;
     IDaoPublic public DaoPublic;
-    IERC721Upgradeable public adminNFT;
-  
+    // IERC721Upgradeable public adminNFT;
     struct NFT {
         string uri;
         address owner;
@@ -30,14 +29,14 @@ contract DaoCommittee is Initializable {
     event CommitteeVote(address committeeMember,uint index, bool decision, NFT _NFT);
     
     modifier onlyComittee() {
-        require(adminNFT.balanceOf(msg.sender)>=1,"only Committee");
-        // require(Committee[msg.sender] == true,"Not Committee Member");
+        // require(adminNFT.balanceOf(msg.sender)>=1,"only Committee");
+        require(Committee[msg.sender] == true,"Not Committee Member");
         _;
     }
     
     function initialize () initializer public {  
-        //  Committee[msg.sender] = true;
-        // committeeMembersCounter++;
+         Committee[msg.sender] = true;
+        committeeMembersCounter++;
     }
  
     
@@ -60,7 +59,9 @@ contract DaoCommittee is Initializable {
         require (nftStore[index].isApprovedByCommittee==false, "NFT already approved");
         require (nftStore[index].rejected == false, "NFT already approved");
 
-        uint votesTarget =(adminNFT.totalSupply() /2)+1;
+        // uint votesTarget =(adminNFT.totalSupply() /2)+1;
+        uint votesTarget =(committeeMembersCounter /2)+1;
+
                
         if (decision == true) {
             nftStore[index].approvedVotes++;
@@ -88,37 +89,37 @@ contract DaoCommittee is Initializable {
     }
   
 
-//    function AddComitteMemberBatch(address[] calldata _addresses)
-//         public
-//         onlyComittee {
-//         for (uint8 i; i < _addresses.length; i++) {
-//             require(
-//                 Committee[_addresses[i]] == false,
-//                 "Already Committee Member"
-//             );
-//             Committee[_addresses[i]] = true;
-//             committeeMembersCounter++;
-//         }
-//     }
-
-    function checkCommitteeMember() external  {
-        if(adminNFT.balanceOf(msg.sender)>=1){
-            return true;
-        }else{
-            return false;
+   function AddComitteMemberBatch(address[] calldata _addresses)
+        public
+        onlyComittee {
+        for (uint8 i; i < _addresses.length; i++) {
+            require(
+                Committee[_addresses[i]] == false,
+                "Already Committee Member"
+            );
+            Committee[_addresses[i]] = true;
+            committeeMembersCounter++;
         }
     }
 
-    // function removeCommitteeMember(address _memberToRemove) public onlyComittee {
-    //     require(Committee[_memberToRemove] == true, "Not Committee member");
-    //     Committee[_memberToRemove] = false;
-    //     committeeMembersCounter--;
+    // function checkCommitteeMember() external  {
+    //     if(adminNFT.balanceOf(msg.sender)>=1){
+    //         return true;
+    //     }else{
+    //         return false;
+    //     }
     // }
 
-    // function withdrawFromCommittee() public onlyComittee {
-    //     Committee[msg.sender] = false;
-    //     committeeMembersCounter--;
-    // }
+    function removeCommitteeMember(address _memberToRemove) public onlyComittee {
+        require(Committee[_memberToRemove] == true, "Not Committee member");
+        Committee[_memberToRemove] = false;
+        committeeMembersCounter--;
+    }
+
+    function withdrawFromCommittee() public onlyComittee {
+        Committee[msg.sender] = false;
+        committeeMembersCounter--;
+    }
 
     // function removeCommitteeMemberBatch(address[] calldata _addresses)
     //     public

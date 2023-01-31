@@ -4,7 +4,8 @@ import "@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "./LinkedList.sol";
 
-contract DaoPublic is Initializable, LinkedList {
+
+contract DaoPublicTest is Initializable, LinkedList {
     using SafeMathUpgradeable for uint;
 
     struct NFTInfo {   
@@ -37,14 +38,15 @@ contract DaoPublic is Initializable, LinkedList {
 
     event PublicVote(address voter, uint index , NFTInfo _NFT);
     event NftApproved(uint index, NFTInfo _NFT,uint startTime );
-    event Winner(uint index, NFTInfo nftInfo);
-
-    function initialize () initializer public {  
-        // allPositions.push();
+    event Winner(uint index, NFTInfo _NFT);
+ 
+    function initialize (address _daoCommitteeContract) initializer public {  
+       daoCommittee= _daoCommitteeContract;
+       __LinkedList_init();
     }
  
-    function setValues (uint _time, address _daoCommitteeContract, uint _timer ) public {
-        daoCommittee= _daoCommitteeContract;
+    function setValues (uint _time, uint _timer ) public {
+        
         time= _time;
         timer= block.timestamp+_timer;
     }
@@ -53,15 +55,15 @@ contract DaoPublic is Initializable, LinkedList {
        _addInfo(uri,   _owner,   _isApprovedByCommittee);
     }
 
+      
+
     function _addInfo(string calldata uri, address _owner, bool _isApprovedByCommittee) internal{
-         nftInfoo[nftIndex] = NFTInfo(uri, _owner, nftIndex, 0, 0, _isApprovedByCommittee, false, 0);
+         nftInfoo[nftIndex] = NFTInfo(uri, _owner, nftIndex, 0, _isApprovedByCommittee, false, 0);
         emit NftApproved(nftIndex,nftInfoo[nftIndex],block.timestamp );
         nftIndex++;
     }
 
-    function checkLength(uint votes) external view returns (uint) {
-        return allPositions.nodes[votes].positions.length;
-    }
+    
 
     function voteNfts(uint index) public {
         require(nftInfoo[index].winnerStatus==false,"Already winner");
@@ -70,56 +72,42 @@ contract DaoPublic is Initializable, LinkedList {
         // nftInfoo[index].votes++;
 
         NFTInfo storage x = nftInfoo[index];
-        if (x.votes == 0) {
-            x.votes = x.votes + 1;
 
-            x.position2D = allPositions.nodes[x.votes].positions.length;
-
-            allPositions.nodes[x.votes].positions.push(x);
-        } else {
-            uint lastPosition2D = allPositions.nodes[x.votes].positions.length - 1;
-
-            if (x.position2D != lastPosition2D) {
-                uint lastIndex = allPositions.nodes[x.votes].positions[lastPosition2D].index;
-                Position storage y = nftInfoo[lastIndex];
-
-                allPositions.nodes[x.votes].positions[x.position2D] =
-                    allPositions.nodes[x.votes].positions[lastPosition2D];
-
-                allPositions.nodes[x.votes].positions[x.position2D].position2D = x.position2D;
-
-                y.position2D = x.position2D;
-
-                allPositions.nodes[x.votes].positions.pop();
-            }
-            else {
-                allPositions.nodes[x.votes].positions.pop();
-            }
-
-            if (allPositions.nodes[x.votes].positions.length == 0) {
-                uint256 prev = allPositions.nodes[x.votes].prev;
-                uint256 next = allPositions.nodes[x.votes].next;
-
-                delete allPositions.nodes[x.votes];
-
-                allPositions.nodes[prev].next = x.votes + 1;
-                allPositions.nodes[next].prev = x.votes + 1;
-            }
-
-            x.votes += 1;
-
-            x.position2D = allPositions.nodes[x.votes].positions.length;
-
-            allPositions.nodes[x.votes].positions.push(x);
-        }
+        x.votes++;
+        insertUp(index);
 
         voteCheck[index][msg.sender] = true;
 
         emit PublicVote( msg.sender, index, nftInfoo[index] );
 
         if(block.timestamp >= timer){
-            // announceWinner();
+            announceWinner();
+        }else{
+            return;
         }
+    }
+
+
+    function announceWinner() public {
+       
+           
+        uint index= getHighest();
+        if(nftInfoo[index].winnerStatus == true){
+            uint dayz= (block.timestamp.sub(timer.sub(time))).div(time);
+            timer = timer.add(dayz.mul(time));
+            return ;
+        }
+        else{
+           uint dayz= (block.timestamp.sub(timer.sub(time))).div(time);
+            timer = timer.add(dayz.mul(time));
+            nftInfoo[index].winnerStatus = true;
+            nftInfoo[index].winTime = timer;
+            winnersIdexes.push(index);
+            emit Winner(index, nftInfoo[index]);
+            remove(index);
+        }
+
+        
     }
 
     // function announceWinner() public {
