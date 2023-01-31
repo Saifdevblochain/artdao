@@ -28,7 +28,7 @@ abstract contract LinkedList {
     }
 
     /// @dev The LinkedList
-    AllPosition public allPositions;
+    AllPosition internal _allPositions;
     /// @dev Reveals the number of votes and position in their corresponding node's `positions` array relevant to each `tokenId`
     mapping (uint => Position) public getPosition;
 
@@ -38,21 +38,21 @@ abstract contract LinkedList {
 
     function __LinkedList_init_unchained() internal {
         // HEAD's next will always be ZERO and prev will always be HIGHEST VOTES
-        allPositions.head = -1;
+        _allPositions.head = -1;
         // TAIL's next will always be LOWEST VOTES and prev will always be ZERO
-        allPositions.tail = 0;
+        _allPositions.tail = 0;
 
-        allPositions.nodes[allPositions.head].prev = allPositions.tail;
-        allPositions.nodes[allPositions.tail].next = allPositions.head;
+        _allPositions.nodes[_allPositions.head].prev = _allPositions.tail;
+        _allPositions.nodes[_allPositions.tail].next = _allPositions.head;
     }
 
     function insertUp(uint tokenId) internal {
         bool nodeCreated;
         Position storage currentPosition = getPosition[tokenId];
         int lastVotes = currentPosition.votes;
-        Node storage lastNode = allPositions.nodes[lastVotes];
+        Node storage lastNode = _allPositions.nodes[lastVotes];
         if (currentPosition.votes != 0) {
-            uint[] storage currentTokenIds = allPositions.nodes[currentPosition.votes].tokenIds;
+            uint[] storage currentTokenIds = _allPositions.nodes[currentPosition.votes].tokenIds;
 
             // getting the last tokenId and its position data
             uint lastTokenId = currentTokenIds[currentTokenIds.length - 1];
@@ -65,11 +65,11 @@ abstract contract LinkedList {
             currentTokenIds.pop();
 
             if (currentTokenIds.length == 0) {
-                Node storage currentNode = allPositions.nodes[currentPosition.votes];
+                Node storage currentNode = _allPositions.nodes[currentPosition.votes];
 
                 // getting the given node's next and prev
-                Node storage nextNode = allPositions.nodes[currentNode.next];
-                Node storage prevNode = allPositions.nodes[currentNode.prev];
+                Node storage nextNode = _allPositions.nodes[currentNode.next];
+                Node storage prevNode = _allPositions.nodes[currentNode.prev];
 
                 // changing linkage for removal
                 prevNode.next = currentNode.next;
@@ -77,10 +77,10 @@ abstract contract LinkedList {
 
                 // setting lastVotes and lastNode
                 lastVotes = currentNode.prev;
-                lastNode = allPositions.nodes[lastVotes];
+                lastNode = _allPositions.nodes[lastVotes];
 
                 // deleting given node
-                delete allPositions.nodes[currentPosition.votes];
+                delete _allPositions.nodes[currentPosition.votes];
             }
 
             // saving new position of last tokenId
@@ -90,7 +90,7 @@ abstract contract LinkedList {
         // changing votes for our given tokenId
         currentPosition.votes++;
 
-        uint[] storage nextTokenIds = allPositions.nodes[currentPosition.votes].tokenIds;
+        uint[] storage nextTokenIds = _allPositions.nodes[currentPosition.votes].tokenIds;
 
         if (nextTokenIds.length == 0) {
             nodeCreated = true;
@@ -103,8 +103,8 @@ abstract contract LinkedList {
         currentPosition.position = nextTokenIds.length - 1;
 
         if (nodeCreated) {
-            Node storage currentNode = allPositions.nodes[currentPosition.votes];
-            Node storage nextNode = allPositions.nodes[lastNode.next];
+            Node storage currentNode = _allPositions.nodes[currentPosition.votes];
+            Node storage nextNode = _allPositions.nodes[lastNode.next];
 
             // changing linkage for node given it was newly created
             currentNode.next = lastNode.next;
@@ -117,31 +117,31 @@ abstract contract LinkedList {
             lastNode.next = currentPosition.votes;
         }
 
-        allPositions.totalVoteCount++;
+        _allPositions.totalVoteCount++;
     }
 
     function remove(uint tokenId) internal {
         Position storage currentPosition = getPosition[tokenId];
 
-        uint[] storage currentTokenIds = allPositions.nodes[currentPosition.votes].tokenIds;
+        uint[] storage currentTokenIds = _allPositions.nodes[currentPosition.votes].tokenIds;
 
         // removing given tokenId
         currentTokenIds.pop();
 
         // adjusting next/prev if node is empty
         if (currentTokenIds.length == 0) {
-            Node storage currentNode = allPositions.nodes[currentPosition.votes];
+            Node storage currentNode = _allPositions.nodes[currentPosition.votes];
 
             // getting the given node's next and prev
-            Node storage nextNode = allPositions.nodes[currentNode.next];
-            Node storage prevNode = allPositions.nodes[currentNode.prev];
+            Node storage nextNode = _allPositions.nodes[currentNode.next];
+            Node storage prevNode = _allPositions.nodes[currentNode.prev];
 
             // changing linkage for removal
             prevNode.next = currentNode.next;
             nextNode.prev = currentNode.prev;
 
             // deleting given node
-            delete allPositions.nodes[currentPosition.votes];
+            delete _allPositions.nodes[currentPosition.votes];
         }
 
         // resetting the position
@@ -149,12 +149,16 @@ abstract contract LinkedList {
     }
 
     function getHighest() internal view returns (uint256) {
-        Node memory headNode = allPositions.nodes[allPositions.head];
+        Node memory headNode = _allPositions.nodes[_allPositions.head];
 
         // node before head will contain tokenIds with highest votes
-        Node memory highestNode = allPositions.nodes[headNode.prev];
+        Node memory highestNode = _allPositions.nodes[headNode.prev];
 
         // arbitrarily choosing the first tokenId in the node as the one with highest votes
         return highestNode.tokenIds[0];
+    }
+
+    function allPositions(int votes, uint position) external view returns (uint) {
+        return _allPositions.nodes[votes].tokenIds[position];
     }
 }
