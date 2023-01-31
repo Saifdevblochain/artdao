@@ -18,6 +18,8 @@
     "hardhat": "^2.12.5"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.8.0"
+    "@openzeppelin/contracts": "^4.8.0",
+    "csv-parser": "^3.0.0",
+    "xlsx": "^0.18.5"
   }
 }
