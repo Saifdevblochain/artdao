@@ -126,7 +126,7 @@ abstract contract LinkedList {
         Position storage currentPosition = getPosition[tokenId];
 
         uint[] storage currentTokenIds = _allPositions.nodes[currentPosition.votes].tokenIds;
-        
+
         // getting the last tokenId and its position data
         uint lastTokenId = currentTokenIds[currentTokenIds.length - 1];
         Position storage lastPosition = getPosition[lastTokenId];
