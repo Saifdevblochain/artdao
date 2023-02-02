@@ -137,6 +137,9 @@ abstract contract LinkedList {
         // removing the duplicate last tokenId
         currentTokenIds.pop();
 
+        // saving new position of last tokenId
+        lastPosition.position = currentPosition.position;
+
         // adjusting next/prev if node is empty
         if (currentTokenIds.length == 0) {
             Node storage currentNode = _allPositions.nodes[currentPosition.votes];
