@@ -2,8 +2,10 @@
 
 pragma solidity 0.8.17;
 
-/// @dev The `votes` are considered as the 1D index for each `tokenId`
-/// @dev The `position` is the 2D index for each `tokenId`
+/**
+ * @dev The `votes` are considered as the 1D index for each `tokenId`
+ * @dev The `position` is the 2D index for each `tokenId`
+ */
 abstract contract LinkedList {
 
     struct Position {
@@ -124,8 +126,15 @@ abstract contract LinkedList {
         Position storage currentPosition = getPosition[tokenId];
 
         uint[] storage currentTokenIds = _allPositions.nodes[currentPosition.votes].tokenIds;
+        
+        // getting the last tokenId and its position data
+        uint lastTokenId = currentTokenIds[currentTokenIds.length - 1];
+        Position storage lastPosition = getPosition[lastTokenId];
 
-        // removing given tokenId
+        // replacing our given tokenId with last tokenId
+        currentTokenIds[currentPosition.position] = currentTokenIds[lastPosition.position];
+
+        // removing the duplicate last tokenId
         currentTokenIds.pop();
 
         // adjusting next/prev if node is empty
@@ -144,8 +153,8 @@ abstract contract LinkedList {
             delete _allPositions.nodes[currentPosition.votes];
         }
 
-        // resetting the position
-        currentPosition.position = 0;
+        // deleting given position
+        delete getPosition[tokenId];
     }
 
     function getHighest() internal view returns (uint256) {
@@ -160,5 +169,13 @@ abstract contract LinkedList {
 
     function allPositions(int votes, uint position) external view returns (uint) {
         return _allPositions.nodes[votes].tokenIds[position];
+    }
+
+    function allNodes(int votes) external view returns (uint[] memory tokenIds, int next, int prev) {
+        return (
+            _allPositions.nodes[votes].tokenIds,
+            _allPositions.nodes[votes].next,
+            _allPositions.nodes[votes].prev
+        );
     }
 }
