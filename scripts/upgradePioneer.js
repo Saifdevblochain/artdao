@@ -1,13 +1,13 @@
 const { ethers, upgrades } = require("hardhat");
 
 async function main() {
-  const PioneerNFT = await ethers.getContractFactory(
-    "PioneerNFT"
+  const DaoPublicTest = await ethers.getContractFactory(
+    "DaoPublicTest"
   );
-  console.log("Upgrading PioneerNFT...");
+  console.log("Upgrading DaoPublicTest...");
   await upgrades.upgradeProxy(
-    "0x79E79Fb59E612AFd801D5D2d74F67Ff6F10d9f14", // old address
-    PioneerNFT
+    "0x4eD86FBcD2Cc1c5dB769AE21593296546BFa5FC9", // old address
+    DaoPublicTest
   );
   console.log("Upgraded Successfully");
 }

@@ -12,31 +12,31 @@ const wallet = new ethers.Wallet(privatekey, provider);
 const contract = new ethers.Contract(deployedAddress, abi, provider);
 let contractWithSigner = contract.connect(wallet);
 
-(async()=>{
-  for(let i = 0; i<98; i++) {
-    console.log(i)
-    await contractWithSigner.voteByCommittee(i,true);
-  }
+// (async()=>{
+//   for(let i = 0; i<55; i++) {
+//     console.log(i)
+//     await contractWithSigner.voteByCommittee(i,true);
+//   }
   
-})()
+// })()
 
-// (async () => {
-//   const fs = require("fs");
-//   const csv = require("csv-parser");
-//   let arr = [];
+(async () => {
+  const fs = require("fs");
+  const csv = require("csv-parser");
+  let arr = [];
 
-//   fs.createReadStream("uri.CSV")
-//     .pipe(csv())
-//     .on("data", (data) => {
-//       let tempData = JSON.parse(JSON.stringify({ ...data }));
-//       arr.push(Object.values(tempData)[0]);
-//     })
-//     .on("end", async () => {
-//       console.log("end::::", arr);
+  fs.createReadStream("uri.CSV")
+    .pipe(csv())
+    .on("data", (data) => {
+      let tempData = JSON.parse(JSON.stringify({ ...data }));
+      arr.push(Object.values(tempData)[0]);
+    })
+    .on("end", async () => {
+      console.log("end::::", arr);
 
-//       for (let i = 0; i < arr.length; i++) {
-//         await contractWithSigner.addNfts(arr[i]);
-//         console.log(arr[i]);
-//       }
-//     });
-// })();
+      for (let i = 0; i < arr.length; i++) {
+        await contractWithSigner.addNfts(arr[i]);
+        console.log(arr[i]);
+      }
+    });
+})();

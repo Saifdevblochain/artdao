@@ -1,40 +1,50 @@
 {
   "manifestVersion": "3.2",
   "admin": {
-    "address": "0xA8BC9253Ea2b7D7cD4657D55896176017B29b3FA",
-    "txHash": "0x4e12baffedbd4fb93052ec09b2adae72e47b176b28715e6df26027cb4e80ac9c"
+    "address": "0x867aC9E2DC6c89e8399517A2D321769f894c6760",
+    "txHash": "0x73622ea4f54777870f5a525a20b667e02dd0a217a2d308bf6dd145cdd220cccc"
   },
   "proxies": [
     {
-      "address": "0x5eDcEF827007Be31a0b2e49A40361D7ad1E65740",
-      "txHash": "0x53a61ffeefa512a237b9618579ee47728bcbb08118ccd7771a16647100e93db5",
+      "address": "0xc2Ad747f4923719F561df8E1fe7dd14d1ddB6bEf",
+      "txHash": "0x0d6ee345b9dd296715a86c1fefd4118d1f6048cadda896cc6ceed018ee46cfa5",
       "kind": "transparent"
     },
     {
-      "address": "0xc63EfEA394688E0a4a4eACa5e0EEa1aF60ca1210",
-      "txHash": "0xca7d20e8f715311c161ad982571f8e58a31c05ff03540a57f92b9bfad503933c",
+      "address": "0xdB3370366CD02677B4894bb905af803174846071",
+      "txHash": "0x2bcbe0d125c19f706d0274cff88d6081e0ca461cc91261a5b3cf89b41e518b40",
       "kind": "transparent"
     },
     {
-      "address": "0x2720CEEeA116d7d43770Ffa2aE4333938137d118",
-      "txHash": "0x1a9045db6ba669f9d7ab02bb6fe758c42ea77564da60990cdaa3a9966695758f",
+      "address": "0x34687d95132B8aCd7a363EAD6b6b5dD173135E04",
+      "txHash": "0xdfeccc34256b1c994dc6e6d27d9c30ec154f48ab4c2d4c69926a6d3438802e4b",
       "kind": "transparent"
     },
     {
-      "address": "0x6deC669E0318b68e7bD1decF0fF648457AB05D62",
-      "txHash": "0xb7cc666f2cc974d4dc34abfdb6982383f4463da57df60fd6e2df9ac3dacd2527",
+      "address": "0x9d51C98e31BaDBC9BcdAe168A347B6ED4Fb6BD94",
+      "txHash": "0xbf9753a5f62415cff3bd4a03eb2340ca0fca6f78c5313da8a5d25f28e2fd41b1",
       "kind": "transparent"
     },
     {
-      "address": "0xB31Bf3E5AFF9fE3E520BE4092450C14C06627c7A",
-      "txHash": "0x2b483dd1efa5d34c9d286b06281a1bb9f17199a965d32f3a7cc005f9f2029643",
+      "address": "0x4eD86FBcD2Cc1c5dB769AE21593296546BFa5FC9",
+      "txHash": "0x39e5378c28760dfc8bcf2c6b109f8ccc70204fd4a6911d877be7448fb5786675",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x5Ac2e37D570a6eE2145043A29C723Cd4008AF306",
+      "txHash": "0x5d3e6a0d526e691b20cc7502fb4f579364e54868047cf78950cbc15a224e4f13",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x352fAcf2c6b66Be0B40cCc01E64C9d7F038Cdc6f",
+      "txHash": "0x672351e79713b94f34e5cba3153ac40b3af6a6a6c935afd53be8fdcf395a79e3",
       "kind": "transparent"
     }
   ],
   "impls": {
     "4ab599e044619b1e5505855529d6b207f48f786b9890f2e48a0ce31f988bf052": {
-      "address": "0xdCc018c061a04bBf6219F3CD1e6d4BD1541D8479",
-      "txHash": "0xf354ff464a1c726da60d34b9b9128b9900a26a61f146334bf589a18314261c09",
+      "address": "0x24ee390E192EFC6bA597fBBc2b88f39Ea0c85D82",
+      "txHash": "0x4a054f3b35aa7b9eb1433bf767d64d8aadca610137ede7b2d514761808817483",
       "layout": {
         "solcVersion": "0.8.17",
         "storage": [
@@ -75,7 +85,7 @@
             "label": "DaoPublic",
             "offset": 0,
             "slot": "3",
-            "type": "t_contract(IDaoPublic)1167",
+            "type": "t_contract(IDaoPublic)855",
             "contract": "DaoCommittee",
             "src": "contracts\\DaoCommittee.sol:11"
           },
@@ -91,7 +101,7 @@
             "label": "nftStore",
             "offset": 0,
             "slot": "5",
-            "type": "t_mapping(t_uint256,t_struct(NFT)790_storage)",
+            "type": "t_mapping(t_uint256,t_struct(NFT)478_storage)",
             "contract": "DaoCommittee",
             "src": "contracts\\DaoCommittee.sol:24"
           },
@@ -113,7 +123,7 @@
             "label": "bool",
             "numberOfBytes": "1"
           },
-          "t_contract(IDaoPublic)1167": {
+          "t_contract(IDaoPublic)855": {
             "label": "contract IDaoPublic",
             "numberOfBytes": "20"
           },
@@ -129,7 +139,7 @@
             "label": "mapping(uint256 => mapping(address => uint8))",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_uint256,t_struct(NFT)790_storage)": {
+          "t_mapping(t_uint256,t_struct(NFT)478_storage)": {
             "label": "mapping(uint256 => struct DaoCommittee.NFT)",
             "numberOfBytes": "32"
           },
@@ -137,7 +147,7 @@
             "label": "string",
             "numberOfBytes": "32"
           },
-          "t_struct(NFT)790_storage": {
+          "t_struct(NFT)478_storage": {
             "label": "struct DaoCommittee.NFT",
             "members": [
               {
@@ -190,285 +200,9 @@
         }
       }
     },
-    "7cd15fb7e74a51c47e384f82bb1c8a918821cc0e9a6281d46e07ef7f9071132c": {
-      "address": "0xE96E77A966d149AF0979c7CBAa394aa10eCa52b9",
-      "txHash": "0x2e6f19091f3c2124cebf3ac05543005c875a43f3c96c8e110cf0c39d65dedaa7",
-      "layout": {
-        "solcVersion": "0.8.17",
-        "storage": [
-          {
-            "label": "_initialized",
-            "offset": 0,
-            "slot": "0",
-            "type": "t_uint8",
-            "contract": "Initializable",
-            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
-            "retypedFrom": "bool"
-          },
-          {
-            "label": "_initializing",
-            "offset": 1,
-            "slot": "0",
-            "type": "t_bool",
-            "contract": "Initializable",
-            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
-          },
-          {
-            "label": "_allPositions",
-            "offset": 0,
-            "slot": "1",
-            "type": "t_struct(AllPosition)1195_storage",
-            "contract": "LinkedList",
-            "src": "contracts\\LinkedList.sol:33"
-          },
-          {
-            "label": "getPosition",
-            "offset": 0,
-            "slot": "5",
-            "type": "t_mapping(t_uint256,t_struct(Position)1175_storage)",
-            "contract": "LinkedList",
-            "src": "contracts\\LinkedList.sol:35"
-          },
-          {
-            "label": "daoCommittee",
-            "offset": 0,
-            "slot": "6",
-            "type": "t_address",
-            "contract": "DaoPublicTest",
-            "src": "contracts\\designDaoPublicTest.sol:21"
-          },
-          {
-            "label": "timer",
-            "offset": 0,
-            "slot": "7",
-            "type": "t_uint256",
-            "contract": "DaoPublicTest",
-            "src": "contracts\\designDaoPublicTest.sol:22"
-          },
-          {
-            "label": "nftIndex",
-            "offset": 0,
-            "slot": "8",
-            "type": "t_uint256",
-            "contract": "DaoPublicTest",
-            "src": "contracts\\designDaoPublicTest.sol:23"
-          },
-          {
-            "label": "time",
-            "offset": 0,
-            "slot": "9",
-            "type": "t_uint256",
-            "contract": "DaoPublicTest",
-            "src": "contracts\\designDaoPublicTest.sol:24"
-          },
-          {
-            "label": "committeeMembersCounter",
-            "offset": 0,
-            "slot": "10",
-            "type": "t_uint256",
-            "contract": "DaoPublicTest",
-            "src": "contracts\\designDaoPublicTest.sol:25"
-          },
-          {
-            "label": "winnersIdexes",
-            "offset": 0,
-            "slot": "11",
-            "type": "t_array(t_uint256)dyn_storage",
-            "contract": "DaoPublicTest",
-            "src": "contracts\\designDaoPublicTest.sol:27"
-          },
-          {
-            "label": "nftInfoo",
-            "offset": 0,
-            "slot": "12",
-            "type": "t_mapping(t_uint256,t_struct(NFTInfo)2378_storage)",
-            "contract": "DaoPublicTest",
-            "src": "contracts\\designDaoPublicTest.sol:30"
-          },
-          {
-            "label": "voteCheck",
-            "offset": 0,
-            "slot": "13",
-            "type": "t_mapping(t_uint256,t_mapping(t_address,t_bool))",
-            "contract": "DaoPublicTest",
-            "src": "contracts\\designDaoPublicTest.sol:32"
-          }
-        ],
-        "types": {
-          "t_address": {
-            "label": "address",
-            "numberOfBytes": "20"
-          },
-          "t_array(t_uint256)dyn_storage": {
-            "label": "uint256[]",
-            "numberOfBytes": "32"
-          },
-          "t_bool": {
-            "label": "bool",
-            "numberOfBytes": "1"
-          },
-          "t_int256": {
-            "label": "int256",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_bool)": {
-            "label": "mapping(address => bool)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_int256,t_struct(Node)1183_storage)": {
-            "label": "mapping(int256 => struct LinkedList.Node)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint256,t_mapping(t_address,t_bool))": {
-            "label": "mapping(uint256 => mapping(address => bool))",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint256,t_struct(NFTInfo)2378_storage)": {
-            "label": "mapping(uint256 => struct DaoPublicTest.NFTInfo)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint256,t_struct(Position)1175_storage)": {
-            "label": "mapping(uint256 => struct LinkedList.Position)",
-            "numberOfBytes": "32"
-          },
-          "t_string_storage": {
-            "label": "string",
-            "numberOfBytes": "32"
-          },
-          "t_struct(AllPosition)1195_storage": {
-            "label": "struct LinkedList.AllPosition",
-            "members": [
-              {
-                "label": "nodes",
-                "type": "t_mapping(t_int256,t_struct(Node)1183_storage)",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "head",
-                "type": "t_int256",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "tail",
-                "type": "t_int256",
-                "offset": 0,
-                "slot": "2"
-              },
-              {
-                "label": "totalVoteCount",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "3"
-              }
-            ],
-            "numberOfBytes": "128"
-          },
-          "t_struct(NFTInfo)2378_storage": {
-            "label": "struct DaoPublicTest.NFTInfo",
-            "members": [
-              {
-                "label": "uri",
-                "type": "t_string_storage",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "owner",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "index",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "2"
-              },
-              {
-                "label": "votes",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "3"
-              },
-              {
-                "label": "isApprovedByCommittee",
-                "type": "t_bool",
-                "offset": 0,
-                "slot": "4"
-              },
-              {
-                "label": "winnerStatus",
-                "type": "t_bool",
-                "offset": 1,
-                "slot": "4"
-              },
-              {
-                "label": "winTime",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "5"
-              }
-            ],
-            "numberOfBytes": "192"
-          },
-          "t_struct(Node)1183_storage": {
-            "label": "struct LinkedList.Node",
-            "members": [
-              {
-                "label": "next",
-                "type": "t_int256",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "prev",
-                "type": "t_int256",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "tokenIds",
-                "type": "t_array(t_uint256)dyn_storage",
-                "offset": 0,
-                "slot": "2"
-              }
-            ],
-            "numberOfBytes": "96"
-          },
-          "t_struct(Position)1175_storage": {
-            "label": "struct LinkedList.Position",
-            "members": [
-              {
-                "label": "votes",
-                "type": "t_int256",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "position",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "1"
-              }
-            ],
-            "numberOfBytes": "64"
-          },
-          "t_uint256": {
-            "label": "uint256",
-            "numberOfBytes": "32"
-          },
-          "t_uint8": {
-            "label": "uint8",
-            "numberOfBytes": "1"
-          }
-        }
-      }
-    },
     "63cc9c86d35918a024dbc2c770b8eb9b2040b31e6f99ab36ae8e98dd9c125f11": {
-      "address": "0xF8BbAE8cFA5cD925613c18DF7b6951123679AE84",
-      "txHash": "0xd21c5fc95f8793921f67c627c745520c4a0acffdb9b2a88a4bb6fd76d7be95ca",
+      "address": "0x5418750D55cDf87543100ad2E0eCbC66CEe4C352",
+      "txHash": "0x87d7fc204475b1ca634d9d9ef7d7b55dbb7cb215ef2ac87a6f79de2442c43cfd",
       "layout": {
         "solcVersion": "0.8.17",
         "storage": [
@@ -493,7 +227,7 @@
             "label": "_allPositions",
             "offset": 0,
             "slot": "1",
-            "type": "t_struct(AllPosition)1370_storage",
+            "type": "t_struct(AllPosition)792_storage",
             "contract": "LinkedList",
             "src": "contracts\\LinkedList.sol:33"
           },
@@ -501,7 +235,7 @@
             "label": "getPosition",
             "offset": 0,
             "slot": "5",
-            "type": "t_mapping(t_uint256,t_struct(Position)1350_storage)",
+            "type": "t_mapping(t_uint256,t_struct(Position)772_storage)",
             "contract": "LinkedList",
             "src": "contracts\\LinkedList.sol:35"
           },
@@ -509,7 +243,7 @@
             "label": "FxStateChildTunnel",
             "offset": 0,
             "slot": "6",
-            "type": "t_contract(IFxStateChildTunnel)2537",
+            "type": "t_contract(IFxStateChildTunnel)1305",
             "contract": "DaoPublicTest",
             "src": "contracts\\designDaoPublicTest.sol:13"
           },
@@ -557,7 +291,7 @@
             "label": "nftInfoo",
             "offset": 0,
             "slot": "12",
-            "type": "t_mapping(t_uint256,t_struct(NFTInfo)2564_storage)",
+            "type": "t_mapping(t_uint256,t_struct(NFTInfo)1332_storage)",
             "contract": "DaoPublicTest",
             "src": "contracts\\designDaoPublicTest.sol:33"
           },
@@ -591,7 +325,7 @@
             "label": "bool",
             "numberOfBytes": "1"
           },
-          "t_contract(IFxStateChildTunnel)2537": {
+          "t_contract(IFxStateChildTunnel)1305": {
             "label": "contract IFxStateChildTunnel",
             "numberOfBytes": "20"
           },
@@ -603,7 +337,7 @@
             "label": "mapping(address => bool)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_int256,t_struct(Node)1358_storage)": {
+          "t_mapping(t_int256,t_struct(Node)780_storage)": {
             "label": "mapping(int256 => struct LinkedList.Node)",
             "numberOfBytes": "32"
           },
@@ -611,11 +345,11 @@
             "label": "mapping(uint256 => mapping(address => bool))",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_uint256,t_struct(NFTInfo)2564_storage)": {
+          "t_mapping(t_uint256,t_struct(NFTInfo)1332_storage)": {
             "label": "mapping(uint256 => struct DaoPublicTest.NFTInfo)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_uint256,t_struct(Position)1350_storage)": {
+          "t_mapping(t_uint256,t_struct(Position)772_storage)": {
             "label": "mapping(uint256 => struct LinkedList.Position)",
             "numberOfBytes": "32"
           },
@@ -623,12 +357,12 @@
             "label": "string",
             "numberOfBytes": "32"
           },
-          "t_struct(AllPosition)1370_storage": {
+          "t_struct(AllPosition)792_storage": {
             "label": "struct LinkedList.AllPosition",
             "members": [
               {
                 "label": "nodes",
-                "type": "t_mapping(t_int256,t_struct(Node)1358_storage)",
+                "type": "t_mapping(t_int256,t_struct(Node)780_storage)",
                 "offset": 0,
                 "slot": "0"
               },
@@ -653,7 +387,7 @@
             ],
             "numberOfBytes": "128"
           },
-          "t_struct(NFTInfo)2564_storage": {
+          "t_struct(NFTInfo)1332_storage": {
             "label": "struct DaoPublicTest.NFTInfo",
             "members": [
               {
@@ -707,7 +441,7 @@
             ],
             "numberOfBytes": "224"
           },
-          "t_struct(Node)1358_storage": {
+          "t_struct(Node)780_storage": {
             "label": "struct LinkedList.Node",
             "members": [
               {
@@ -731,7 +465,301 @@
             ],
             "numberOfBytes": "96"
           },
-          "t_struct(Position)1350_storage": {
+          "t_struct(Position)772_storage": {
+            "label": "struct LinkedList.Position",
+            "members": [
+              {
+                "label": "votes",
+                "type": "t_int256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "position",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "c98f905bfd0e5ae8e016f62e05f60a1dc8c5ec84cc433afebd931076f3c25988": {
+      "address": "0xb5FF0f7ef6bfF7e8003c12f9bD6029EcFB5BFf7d",
+      "txHash": "0xa1af6d83adb26e9c978b665061be8d4f9e76915b01214b6220bf673be5ff5173",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "_allPositions",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_struct(AllPosition)792_storage",
+            "contract": "LinkedList",
+            "src": "contracts\\LinkedList.sol:33"
+          },
+          {
+            "label": "getPosition",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_uint256,t_struct(Position)772_storage)",
+            "contract": "LinkedList",
+            "src": "contracts\\LinkedList.sol:35"
+          },
+          {
+            "label": "FxStateChildTunnel",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_contract(IFxStateChildTunnel)1305",
+            "contract": "DaoPublicTest",
+            "src": "contracts\\designDaoPublicTest.sol:13"
+          },
+          {
+            "label": "daoCommittee",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_address",
+            "contract": "DaoPublicTest",
+            "src": "contracts\\designDaoPublicTest.sol:26"
+          },
+          {
+            "label": "timer",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_uint256",
+            "contract": "DaoPublicTest",
+            "src": "contracts\\designDaoPublicTest.sol:27"
+          },
+          {
+            "label": "nftIndex",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_uint256",
+            "contract": "DaoPublicTest",
+            "src": "contracts\\designDaoPublicTest.sol:28"
+          },
+          {
+            "label": "time",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_uint256",
+            "contract": "DaoPublicTest",
+            "src": "contracts\\designDaoPublicTest.sol:29"
+          },
+          {
+            "label": "winnersIdexes",
+            "offset": 0,
+            "slot": "11",
+            "type": "t_array(t_uint256)dyn_storage",
+            "contract": "DaoPublicTest",
+            "src": "contracts\\designDaoPublicTest.sol:31"
+          },
+          {
+            "label": "nftInfoo",
+            "offset": 0,
+            "slot": "12",
+            "type": "t_mapping(t_uint256,t_struct(NFTInfo)1332_storage)",
+            "contract": "DaoPublicTest",
+            "src": "contracts\\designDaoPublicTest.sol:33"
+          },
+          {
+            "label": "voteCheck",
+            "offset": 0,
+            "slot": "13",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_bool))",
+            "contract": "DaoPublicTest",
+            "src": "contracts\\designDaoPublicTest.sol:35"
+          },
+          {
+            "label": "isclaimed",
+            "offset": 0,
+            "slot": "14",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_bool))",
+            "contract": "DaoPublicTest",
+            "src": "contracts\\designDaoPublicTest.sol:36"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IFxStateChildTunnel)1305": {
+            "label": "contract IFxStateChildTunnel",
+            "numberOfBytes": "20"
+          },
+          "t_int256": {
+            "label": "int256",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_int256,t_struct(Node)780_storage)": {
+            "label": "mapping(int256 => struct LinkedList.Node)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_bool))": {
+            "label": "mapping(uint256 => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(NFTInfo)1332_storage)": {
+            "label": "mapping(uint256 => struct DaoPublicTest.NFTInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Position)772_storage)": {
+            "label": "mapping(uint256 => struct LinkedList.Position)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(AllPosition)792_storage": {
+            "label": "struct LinkedList.AllPosition",
+            "members": [
+              {
+                "label": "nodes",
+                "type": "t_mapping(t_int256,t_struct(Node)780_storage)",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "head",
+                "type": "t_int256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "tail",
+                "type": "t_int256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "totalVoteCount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_struct(NFTInfo)1332_storage": {
+            "label": "struct DaoPublicTest.NFTInfo",
+            "members": [
+              {
+                "label": "uri",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "owner",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "index",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "votes",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "isApprovedByCommittee",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "winnerStatus",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "4"
+              },
+              {
+                "label": "winTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "votersCount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              }
+            ],
+            "numberOfBytes": "224"
+          },
+          "t_struct(Node)780_storage": {
+            "label": "struct LinkedList.Node",
+            "members": [
+              {
+                "label": "next",
+                "type": "t_int256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "prev",
+                "type": "t_int256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "tokenIds",
+                "type": "t_array(t_uint256)dyn_storage",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "96"
+          },
+          "t_struct(Position)772_storage": {
             "label": "struct LinkedList.Position",
             "members": [
               {

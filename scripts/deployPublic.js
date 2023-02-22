@@ -17,7 +17,7 @@ async function main() {
   );
   console.log("Deploying DaoPublicTest...");
   const contract = await upgrades.deployProxy(DaoPublicTest, 
-    ["0xE4d744CB694729F84f7623d0d8E348dE0F2a3067"], {
+    ["0x6deC669E0318b68e7bD1decF0fF648457AB05D62"], {
     initializer: "initialize",
     kind: "transparent",
   });
@@ -27,5 +27,4 @@ async function main() {
   await new Promise(resolve => setTimeout(resolve, 20000));
   verify(contract.address, [])
 }
-// 0x7DC1f3352E5E3e01b99428d0005545c1A94222cD
 main();

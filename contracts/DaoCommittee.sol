@@ -9,7 +9,7 @@ contract DaoCommittee is Initializable {
     uint public nftIndex;
     uint public committeeMembersCounter;
     IDaoPublic public DaoPublic;
-    // IERC721Upgradeable public adminNFT;
+
     struct NFT {
         string uri;
         address owner;
@@ -51,9 +51,9 @@ contract DaoCommittee is Initializable {
 
 
     function voteByCommittee(uint index, bool decision) public onlyComittee {
-        // if (block.timestamp>=DaoPublic.timer()){
-        //    DaoPublic.updateWinner();
-        // }
+       if (block.timestamp>=DaoPublic.timer()){
+                DaoPublic.announceWinner();
+       }
         require(committeeVoteCheck[index][msg.sender] == 0, " Already Voted ");
         require(nftStore[index].owner != address(0), "NFT doesnot exist");
         require (nftStore[index].isApprovedByCommittee==false, "NFT already approved");
@@ -89,50 +89,21 @@ contract DaoCommittee is Initializable {
     }
   
 
-   function AddComitteMemberBatch(address[] calldata _addresses)
-        public
-        onlyComittee {
-        for (uint8 i; i < _addresses.length; i++) {
-            require(
-                Committee[_addresses[i]] == false,
-                "Already Committee Member"
-            );
-            Committee[_addresses[i]] = true;
+    function addRemoveCommitteeMember(address _address) public  {
+        
+        if(Committee[_address] == false){
+            Committee[_address] = true;
             committeeMembersCounter++;
+        }else{
+            Committee[_address] = false;
+            committeeMembersCounter--;
         }
     }
 
-    // function checkCommitteeMember() external  {
-    //     if(adminNFT.balanceOf(msg.sender)>=1){
-    //         return true;
-    //     }else{
-    //         return false;
-    //     }
+    // function removeCommitteeMember(address _memberToRemove) public  {
+    //     require(Committee[_memberToRemove] == true, "Not Committee member");
+    //     Committee[_memberToRemove] = false;
+    //     committeeMembersCounter--;
     // }
-
-    function removeCommitteeMember(address _memberToRemove) public onlyComittee {
-        require(Committee[_memberToRemove] == true, "Not Committee member");
-        Committee[_memberToRemove] = false;
-        committeeMembersCounter--;
-    }
-
-    function withdrawFromCommittee() public onlyComittee {
-        Committee[msg.sender] = false;
-        committeeMembersCounter--;
-    }
-
-    // function removeCommitteeMemberBatch(address[] calldata _addresses)
-    //     public
-    //     onlyComittee {
-    //     for (uint8 i; i < _addresses.length; i++) {
-    //         require(
-    //             Committee[_addresses[i]] == true,
-    //             "Not in Committee"
-    //         );
-    //         Committee[_addresses[i]] = false;
-    //         committeeMembersCounter--;
-    //     }
-    // }
-
     
 }
