@@ -32,7 +32,7 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
     uint public timer;
     uint private nftIndex;
 
-    uint[] public winnersIdexes;
+    uint[] public winnersIndexes;
 
     mapping(uint => NFTInfo) public nftInfoo;
 
@@ -40,7 +40,7 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
     mapping(uint => mapping(address => bool)) public isclaimed;
 
     modifier onlyDaoCommitte() {
-        require(msg.sender == address(daoCommittee), "Only DaoCommitte can call");
+        require(msg.sender == address(daoCommittee), "Only DaoCommittee can call");
         _;
     }
 
@@ -79,7 +79,7 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
         nftIndex++;
     }
 
-    function voteNfts(uint index) public {
+    function voteNfts(uint index) external {
         require(nftInfoo[index].winnerStatus == false, "Already winner");
         require(voteCheck[index][msg.sender] == false, "Already Voted");
         require(index < nftIndex, " Choose Correct NFT to vote ");
@@ -112,7 +112,7 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
         if (isValid && !nftInfoo[index].winnerStatus) {
             nftInfoo[index].winnerStatus = true;
             nftInfoo[index].winTime = timer;
-            winnersIdexes.push(index);
+            winnersIndexes.push(index);
             // FxStateChildTunnel.sendMessageToRoot(abi.encode(nftInfoo[index].owner, 720 ether));
             remove(index);
 
@@ -122,11 +122,11 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
         timer = timer.add(dDays.mul(FIXED_DURATION));
     }
 
-    function updateDaoCommitteeAddress(address _address) public onlyOwner {
+    function updateDaoCommitteeAddress(address _address) external onlyOwner {
         daoCommittee = _address;
     }
 
-    function setFxStateChildTunnel(IFxStateChildTunnel _FxStateChildTunnel) public onlyOwner {
+    function setFxStateChildTunnel(IFxStateChildTunnel _FxStateChildTunnel) external onlyOwner {
         FxStateChildTunnel = _FxStateChildTunnel;
     }
 }

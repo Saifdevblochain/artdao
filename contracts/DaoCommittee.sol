@@ -18,7 +18,7 @@ contract DaoCommittee is Initializable, OwnableUpgradeable {
         bool isApprovedByCommittee;
         bool rejected;
     }
-   
+
     mapping(address => bool) public Committee;
 
     mapping(uint => NFT) public nftStore;
