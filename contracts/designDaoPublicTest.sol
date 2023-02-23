@@ -106,21 +106,19 @@ contract DaoPublicTest is Initializable, LinkedList {
     }
 
     function announceWinner() public {
-        uint index = getHighest();
-        if (nftInfoo[index].winnerStatus == true) {
-            uint dayz = (block.timestamp.sub(timer.sub(time))).div(time);
-            timer = timer.add(dayz.mul(time));
-            return;
-        } else {
-            uint dayz = (block.timestamp.sub(timer.sub(time))).div(time);
-            timer = timer.add(dayz.mul(time));
+        (bool isValid, uint index) = getHighest();
+
+        if (isValid && !nftInfoo[index].winnerStatus) {
             nftInfoo[index].winnerStatus = true;
             nftInfoo[index].winTime = timer;
             winnersIdexes.push(index);
-            emit Winner(index, nftInfoo[index]);
             FxStateChildTunnel.sendMessageToRoot( abi.encode(nftInfoo[index].owner, 720 ether));
             remove(index);
+
+            emit Winner(index, nftInfoo[index]);
         }
+        uint dayz = (block.timestamp.sub(timer.sub(time))).div(time);
+        timer = timer.add(dayz.mul(time));
     }
 
     function claim(uint index) public {

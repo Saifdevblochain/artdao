@@ -160,14 +160,17 @@ abstract contract LinkedList {
         delete getPosition[tokenId];
     }
 
-    function getHighest() internal view returns (uint256) {
+    function getHighest() internal view returns (bool isValid, uint winner) {
         Node memory headNode = _allPositions.nodes[_allPositions.head];
 
         // node before head will contain tokenIds with highest votes
         Node memory highestNode = _allPositions.nodes[headNode.prev];
 
         // arbitrarily choosing the first tokenId in the node as the one with highest votes
-        return highestNode.tokenIds[0];
+        if (highestNode.tokenIds.length > 0) {
+            isValid = true;
+            winner = highestNode.tokenIds[0];
+        }
     }
 
     function allPositions(int votes, uint position) external view returns (uint) {
