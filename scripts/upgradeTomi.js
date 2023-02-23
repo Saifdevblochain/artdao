@@ -2,7 +2,7 @@ const { ethers, upgrades } = require("hardhat");
 
 async function main() {
   const Tomi = await ethers.getContractFactory(
-    "Tomi"
+    "DaoPublicTest"
   );
   console.log("Upgrading Tomi...");
   await upgrades.upgradeProxy(

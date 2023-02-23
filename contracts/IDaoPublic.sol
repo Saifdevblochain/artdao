@@ -14,6 +14,7 @@ interface IDaoPublic{
         bool isApprovedByCommittee;
         bool winnerStatus;
         uint winTime;
+        uint votersCount;
     }
 
     function addInfo (string calldata uri,address _owner, bool _isApprovedByCommittee) external ;

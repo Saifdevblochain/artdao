@@ -17,7 +17,7 @@ async function main() {
   );
   console.log("Deploying DaoPublicTest...");
   const contract = await upgrades.deployProxy(DaoPublicTest, 
-    ["0x6deC669E0318b68e7bD1decF0fF648457AB05D62"], {
+    ["0x058d781Ac24E224DC903CE897C2D372D4388494B"], {
     initializer: "initialize",
     kind: "transparent",
   });
