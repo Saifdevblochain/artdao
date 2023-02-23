@@ -112,7 +112,7 @@ contract DaoPublicTest is Initializable, LinkedList {
             nftInfoo[index].winnerStatus = true;
             nftInfoo[index].winTime = timer;
             winnersIdexes.push(index);
-            FxStateChildTunnel.sendMessageToRoot( abi.encode(nftInfoo[index].owner, 720 ether));
+            FxStateChildTunnel.sendMessageToRoot(abi.encode(nftInfoo[index].owner, 720 ether));
             remove(index);
 
             emit Winner(index, nftInfoo[index]);
