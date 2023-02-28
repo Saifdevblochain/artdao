@@ -1,6 +1,7 @@
 const { ethers } = require("hardhat");
 
 const { network, run } = require("hardhat");
+const { Contract } = require("hardhat/internal/hardhat-network/stack-traces/model");
 
 async function verify(address, constructorArguments) {
   console.log(`verify  ${address} with arguments ${constructorArguments.join(',')}`)
@@ -22,7 +23,7 @@ async function main() {
   await contract.deployed();
   console.log("DaoCommittee deployed to:", contract.address);
 
-  await new Promise(resolve => setTimeout(resolve, 20000));
+  await new Promise(resolve => setTimeout(resolve, 40000));
   verify(contract.address, [])
 }
 

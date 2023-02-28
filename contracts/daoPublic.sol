@@ -3,17 +3,18 @@ pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "openzeppelin/contracts-upgradeable/contracts/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "./LinkedList.sol";
 
 interface IFxStateChildTunnel {
     function sendMessageToRoot(bytes memory message) external;
+    function getEventSign() external view returns(bytes32);
 }
 
 contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
     using SafeMathUpgradeable for uint;
 
-    uint public constant FIXED_DURATION = 86400;
+    uint public FIXED_DURATION ;
 
     IFxStateChildTunnel public FxStateChildTunnel;
 
@@ -47,18 +48,14 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
     event PublicVote(address voter, uint index, NFTInfo _NFT);
     event NftApproved(uint index, NFTInfo _NFT, uint startTime);
     event Winner(uint index, NFTInfo _NFT);
-    event claimed(address claimedBy, uint indexClaimed, uint amountClaimed);
+    event claimed(address claimedBy, uint index, uint amount,uint claimTime,bytes32 eventSign);
 
-    function initialize(
-        address _daoCommittee,
-        uint _fixedDuration,
-        uint _timer
-    ) public initializer {
+    function initialize( address _daoCommittee, uint _timer, uint FIXED_DURATION_ ) public initializer {
         __LinkedList_init();
         __Ownable_init();
         daoCommittee = _daoCommittee;
-        FIXED_DURATION = _fixedDuration;
         timer = block.timestamp + _timer;
+        FIXED_DURATION=FIXED_DURATION_;
     }
 
     function addInfo(
@@ -113,13 +110,43 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
             nftInfoo[index].winnerStatus = true;
             nftInfoo[index].winTime = timer;
             winnersIndexes.push(index);
-            // FxStateChildTunnel.sendMessageToRoot(abi.encode(nftInfoo[index].owner, 720 ether));
+            FxStateChildTunnel.sendMessageToRoot(abi.encode(nftInfoo[index].owner, 720 ether));
             remove(index);
-
             emit Winner(index, nftInfoo[index]);
+    emit claimed( nftInfoo[index].owner ,index, 720 ether, block.timestamp, FxStateChildTunnel.getEventSign());
+
         }
         uint dDays = (block.timestamp.sub(timer.sub(FIXED_DURATION))).div(FIXED_DURATION);
         timer = timer.add(dDays.mul(FIXED_DURATION));
+    }
+
+    function claim(uint index) public {
+    require(nftInfoo[index].winnerStatus == true,"Can't Claim");
+    require( voteCheck[index][msg.sender] == true, "You have not voted");
+    require( isclaimed[index][msg.sender]== false , "Already Claimed" );
+
+    uint  amount = 180 ether/ (nftInfoo[index].votersCount);
+    FxStateChildTunnel.sendMessageToRoot(abi.encode(msg.sender,amount));
+    
+    isclaimed[index][msg.sender]=  true;
+    emit claimed(msg.sender , index, amount, block.timestamp, FxStateChildTunnel.getEventSign());
+    }
+
+
+    function claimBatch(uint[] memory indexes) public {
+    uint totalAmount;
+    for (uint i; i < indexes.length; ++i) {
+        require(nftInfoo[indexes[i]].winnerStatus == true, "Can't Claim");
+        require( voteCheck[indexes[i]][msg.sender] == true, "You have not voted" );
+        require( isclaimed[indexes[i]][msg.sender] == false,"Already Claimed");
+        uint amount = nftInfoo[indexes[i]].votersCount;
+        totalAmount += amount;
+        isclaimed[indexes[i]][msg.sender] = true;
+        emit claimed(msg.sender,indexes[i], 720 ether,block.timestamp, FxStateChildTunnel.getEventSign()  );
+    }
+    FxStateChildTunnel.sendMessageToRoot(
+        abi.encode(msg.sender, totalAmount)
+    );
     }
 
     function updateDaoCommitteeAddress(address _address) external onlyOwner {
@@ -128,5 +155,9 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
 
     function setFxStateChildTunnel(IFxStateChildTunnel _FxStateChildTunnel) external onlyOwner {
         FxStateChildTunnel = _FxStateChildTunnel;
+    }
+
+    function setTimer (uint _FIXED_DURATION) public {
+        FIXED_DURATION=_FIXED_DURATION;
     }
 }
