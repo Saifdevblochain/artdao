@@ -11,6 +11,10 @@ interface IFxStateChildTunnel {
     function SEND_MESSAGE_EVENT_SIG() external view returns(bytes32);
 }
 
+interface IDaoCommittee {
+    function committeeMembersCounter() external view returns (uint);
+}
+
 
 contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
     using SafeMathUpgradeable for uint;
@@ -24,13 +28,16 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
         address owner;
         uint index;
         uint votes;
-        bool isApprovedByCommittee;
-        bool winnerStatus;
         uint winTime;
         uint votersCount;
+        uint favourVotes;
+        uint disApprovedVotes;
+        bool isApprovedByCommittee;
+        bool winnerStatus;
+        bool blackListed;
     }
 
-    address public daoCommittee;
+    IDaoCommittee public daoCommittee;
     uint public timer;
     uint private nftIndex;
 
@@ -52,8 +59,9 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
     event NftApproved(uint index, NFTInfo _NFT, uint startTime);
     event Winner(uint index, NFTInfo _NFT);
     event claimed(address claimedBy, uint index, uint amount,uint claimTime,bytes32 eventSign);
+    event blackListed(uint index, bool decision , NFTInfo _NFT);
 
-    function initialize( address _daoCommittee, uint _timer, uint FIXED_DURATION_ ) public initializer {
+    function initialize( IDaoCommittee _daoCommittee, uint _timer, uint FIXED_DURATION_ ) public initializer {
         __LinkedList_init();
         __Ownable_init();
         daoCommittee = _daoCommittee;
@@ -138,21 +146,21 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
 
     function claimBatch(uint[] memory indexes) public {
     uint totalAmount;
-    for (uint i; i < indexes.length; ++i) {
+    for(uint i; i < indexes.length; ++i) {
         require(nftInfoo[indexes[i]].winnerStatus == true, "Can't Claim");
         require( voteCheck[indexes[i]][msg.sender] == true, "You have not voted" );
         require( isclaimed[indexes[i]][msg.sender] == false,"Already Claimed");
         uint amount = nftInfoo[indexes[i]].votersCount;
         totalAmount += amount;
         isclaimed[indexes[i]][msg.sender] = true;
-        emit claimed(msg.sender,indexes[i], 720 ether,block.timestamp, FxStateChildTunnel.SEND_MESSAGE_EVENT_SIG()  );
+        emit claimed(msg.sender,indexes[i], 720 ether,block.timestamp, FxStateChildTunnel.SEND_MESSAGE_EVENT_SIG());
     }
     FxStateChildTunnel.sendMessageToRoot(
         abi.encode(msg.sender, totalAmount)
     );
     }
 
-    function updateDaoCommitteeAddress(address _address) external onlyOwner {
+    function updateDaoCommitteeAddress(IDaoCommittee _address) external onlyOwner {
         daoCommittee = _address;
     }
 
@@ -163,6 +171,33 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
     function setTimer (uint _FIXED_DURATION) public {
         FIXED_DURATION=_FIXED_DURATION;
     }
+
+    function blackListArt(uint index, bool decision) public {
+        require(nftInfoo[index].blackListed == false,"Already Blacklisted");
+        uint votesTarget = (daoCommittee.committeeMembersCounter() / 2) + 1;
+
+        // require either favour /disfavour votes < target votes, "already checked"
+        require(nftInfoo[index].favourVotes < votesTarget || nftInfoo[index].disApprovedVotes < votesTarget,"already voted for check");
+        if (block.timestamp >= timer) {
+            _announceWinner();
+        }
+
+        if (decision == true) {
+            nftInfoo[index].favourVotes++;
+
+            if (nftInfoo[index].favourVotes >= votesTarget) {
+                nftInfoo[index].blackListed = true;
+            emit blackListed( index, decision, nftInfoo[index]);
+            }
+
+            // emit CommitteeVote(msg.sender, index, decision, nftStore[index]);
+        } else {
+            nftInfoo[index].disApprovedVotes++;
+            // emit commite decision here and above too
+            // emit CommitteeVote(msg.sender, index, decision, nftStore[index]);
+        }
+    }
+
 
    
 }

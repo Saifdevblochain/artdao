@@ -43,39 +43,54 @@ contract DaoCommittee is Initializable, OwnableUpgradeable {
         nftStore[nftIndex] = NFT(uri_,msg.sender,0,0,false,false);
         emit NftAdded(nftIndex, nftStore[nftIndex], block.timestamp);
         nftIndex++;
-
-        if (block.timestamp>=DaoPublic.timer()) {
-            DaoPublic.announceWinner();
-        }
+        DaoPublic.announceWinner();
     }
 
     function voteByCommittee(uint index, bool decision) public onlyComittee {
-        if (block.timestamp >= DaoPublic.timer()) {
-            DaoPublic.announceWinner();
-        }
-
-        require(committeeVoteCheck[index][msg.sender] == 0, " Already Voted ");
+        DaoPublic.announceWinner();
+        // require(committeeVoteCheck[index][msg.sender] == 0, " Already Voted ");
         require(nftStore[index].owner != address(0), "NFT doesnot exist");
         require(nftStore[index].isApprovedByCommittee==false, "NFT already approved");
-        require(nftStore[index].rejected == false, "NFT already approved");
-
+        require(nftStore[index].rejected == false, "NFT Rejected");
         uint votesTarget = (committeeMembersCounter / 2) + 1;
-        if (decision == true) {
-            nftStore[index].approvedVotes++;
-            committeeVoteCheck[index][msg.sender] = 1;
 
+        if(committeeVoteCheck[index][msg.sender] == 0){
+            if (decision == true) {
+                nftStore[index].approvedVotes++;
+                committeeVoteCheck[index][msg.sender] = 1;
+    
+                if (nftStore[index].approvedVotes >= votesTarget) {
+                    nftStore[index].isApprovedByCommittee = true;
+                    DaoPublic.addInfo(nftStore[index].uri, nftStore[index].owner, true);
+                }
+                emit CommitteeVote(msg.sender, index, decision, nftStore[index]);
+            } else {
+                nftStore[index].rejectedVotes++;
+                committeeVoteCheck[index][msg.sender] = 2;
+    
+                if (nftStore[index].rejectedVotes >= votesTarget) {
+                    nftStore[index].isApprovedByCommittee = false;
+                    nftStore[index].rejected =true;
+                }
+                emit CommitteeVote(msg.sender, index, decision, nftStore[index]);
+            }
+        }else if(committeeVoteCheck[index][msg.sender] == 1 && decision == false){
+            nftStore[index].rejectedVotes++;
+            nftStore[index].approvedVotes--;
+            committeeVoteCheck[index][msg.sender] == 2;
+            if (nftStore[index].rejectedVotes >= votesTarget) {
+                    nftStore[index].isApprovedByCommittee = false;
+                    nftStore[index].rejected =true;
+                }
+            emit CommitteeVote(msg.sender, index, decision, nftStore[index]);
+
+        }else if(committeeVoteCheck[index][msg.sender] == 2 && decision == true){
+            nftStore[index].rejectedVotes--;
+            nftStore[index].approvedVotes++;
+            committeeVoteCheck[index][msg.sender] == 1;
             if (nftStore[index].approvedVotes >= votesTarget) {
                 nftStore[index].isApprovedByCommittee = true;
                 DaoPublic.addInfo(nftStore[index].uri, nftStore[index].owner, true);
-            }
-            emit CommitteeVote(msg.sender, index, decision, nftStore[index]);
-        } else {
-            nftStore[index].rejectedVotes++;
-            committeeVoteCheck[index][msg.sender] = 2;
-
-            if (nftStore[index].rejectedVotes >= votesTarget) {
-                nftStore[index].isApprovedByCommittee = false;
-                nftStore[index].rejected =true;
             }
             emit CommitteeVote(msg.sender, index, decision, nftStore[index]);
         }

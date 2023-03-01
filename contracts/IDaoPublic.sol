@@ -5,19 +5,19 @@ pragma solidity ^0.8.17;
 
 interface IDaoPublic{
 
-     struct NFT {   
+    struct NFTInfo {
         string uri;
         address owner;
         uint index;
         uint votes;
-        uint position2D;
         bool isApprovedByCommittee;
         bool winnerStatus;
         uint winTime;
         uint votersCount;
+        uint favourVotes;
+        uint disApprovedVotes;
     }
 
     function addInfo (string calldata uri,address _owner, bool _isApprovedByCommittee) external ;
-    function timer() external view returns(uint);
     function announceWinner() external;
 }
