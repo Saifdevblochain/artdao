@@ -13,6 +13,7 @@ interface IFxStateChildTunnel {
 
 interface IDaoCommittee {
     function committeeMembersCounter() external view returns (uint);
+    function Committee(address _add) external view returns(bool);
 }
 
 
@@ -34,7 +35,7 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
         uint disApprovedVotes;
         bool isApprovedByCommittee;
         bool winnerStatus;
-        bool blackListed;
+        bool isBlackListed;
     }
 
     IDaoCommittee public daoCommittee;
@@ -60,6 +61,7 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
     event Winner(uint index, NFTInfo _NFT);
     event claimed(address claimedBy, uint index, uint amount,uint claimTime,bytes32 eventSign);
     event blackListed(uint index, bool decision , NFTInfo _NFT);
+    event voteForBlackList(address committeeMember, uint index, bool decision, NFTInfo _NFT);
 
     function initialize( IDaoCommittee _daoCommittee, uint _timer, uint FIXED_DURATION_ ) public initializer {
         __LinkedList_init();
@@ -82,7 +84,8 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
         address _owner,
         bool _isApprovedByCommittee
     ) internal {
-        nftInfoo[nftIndex] = NFTInfo(uri,_owner, nftIndex,0,_isApprovedByCommittee, false, 0, 0);
+        nftInfoo[nftIndex] = NFTInfo(uri,_owner, nftIndex,0,0,0,0,0,_isApprovedByCommittee,false, false);
+    
         emit NftApproved(nftIndex, nftInfoo[nftIndex], block.timestamp);
         nftIndex++;
     }
@@ -171,8 +174,9 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
         FIXED_DURATION=_FIXED_DURATION;
     }
 
-    function blackListArt(uint index, bool decision) public {
-        require(nftInfoo[index].blackListed == false,"Already Blacklisted");
+    function blackListArt(uint index, bool decision) public  {
+        require(nftInfoo[index].isBlackListed == false,"Already Blacklisted");
+        require (daoCommittee.Committee(msg.sender)== true,"Only Committee Member can call");
         uint votesTarget = (daoCommittee.committeeMembersCounter() / 2) + 1;
 
         // require either favour /disfavour votes < target votes, "already checked"
@@ -185,18 +189,16 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
             nftInfoo[index].favourVotes++;
 
             if (nftInfoo[index].favourVotes >= votesTarget) {
-                nftInfoo[index].blackListed = true;
+                nftInfoo[index].isBlackListed = true;
 
                 remove(index);
 
                 emit blackListed( index, decision, nftInfoo[index]);
             }
-
-            // emit CommitteeVote(msg.sender, index, decision, nftStore[index]);
+            emit voteForBlackList(msg.sender , index, decision , nftInfoo[index]);
         } else {
             nftInfoo[index].disApprovedVotes++;
-            // emit commite decision here and above too
-            // emit CommitteeVote(msg.sender, index, decision, nftStore[index]);
+            emit voteForBlackList(msg.sender , index, decision , nftInfoo[index]);
         }
     }
 

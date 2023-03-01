@@ -10,12 +10,13 @@ interface IDaoPublic{
         address owner;
         uint index;
         uint votes;
-        bool isApprovedByCommittee;
-        bool winnerStatus;
         uint winTime;
         uint votersCount;
         uint favourVotes;
         uint disApprovedVotes;
+        bool isApprovedByCommittee;
+        bool winnerStatus;
+        bool isBlackListed;
     }
 
     function addInfo (string calldata uri,address _owner, bool _isApprovedByCommittee) external ;
