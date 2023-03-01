@@ -8,8 +8,9 @@ import "./LinkedList.sol";
 
 interface IFxStateChildTunnel {
     function sendMessageToRoot(bytes memory message) external;
-    function getEventSign() external view returns(bytes32);
+    function SEND_MESSAGE_EVENT_SIG() external view returns(bytes32);
 }
+
 
 contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
     using SafeMathUpgradeable for uint;
@@ -34,11 +35,13 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
     uint private nftIndex;
 
     uint[] public winnersIndexes;
+    
 
     mapping(uint => NFTInfo) public nftInfoo;
 
     mapping(uint => mapping(address => bool)) public voteCheck;
     mapping(uint => mapping(address => bool)) public isclaimed;
+
 
     modifier onlyDaoCommitte() {
         require(msg.sender == address(daoCommittee), "Only DaoCommittee can call");
@@ -113,7 +116,7 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
             FxStateChildTunnel.sendMessageToRoot(abi.encode(nftInfoo[index].owner, 720 ether));
             remove(index);
             emit Winner(index, nftInfoo[index]);
-    emit claimed( nftInfoo[index].owner ,index, 720 ether, block.timestamp, FxStateChildTunnel.getEventSign());
+    emit claimed( nftInfoo[index].owner ,index, 720 ether, block.timestamp,FxStateChildTunnel.SEND_MESSAGE_EVENT_SIG() );
 
         }
         uint dDays = (block.timestamp.sub(timer.sub(FIXED_DURATION))).div(FIXED_DURATION);
@@ -129,7 +132,7 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
     FxStateChildTunnel.sendMessageToRoot(abi.encode(msg.sender,amount));
     
     isclaimed[index][msg.sender]=  true;
-    emit claimed(msg.sender , index, amount, block.timestamp, FxStateChildTunnel.getEventSign());
+    emit claimed(msg.sender , index, amount, block.timestamp, FxStateChildTunnel.SEND_MESSAGE_EVENT_SIG() );
     }
 
 
@@ -142,7 +145,7 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
         uint amount = nftInfoo[indexes[i]].votersCount;
         totalAmount += amount;
         isclaimed[indexes[i]][msg.sender] = true;
-        emit claimed(msg.sender,indexes[i], 720 ether,block.timestamp, FxStateChildTunnel.getEventSign()  );
+        emit claimed(msg.sender,indexes[i], 720 ether,block.timestamp, FxStateChildTunnel.SEND_MESSAGE_EVENT_SIG()  );
     }
     FxStateChildTunnel.sendMessageToRoot(
         abi.encode(msg.sender, totalAmount)
@@ -160,4 +163,6 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
     function setTimer (uint _FIXED_DURATION) public {
         FIXED_DURATION=_FIXED_DURATION;
     }
+
+   
 }
