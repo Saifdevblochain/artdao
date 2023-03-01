@@ -124,8 +124,7 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
             FxStateChildTunnel.sendMessageToRoot(abi.encode(nftInfoo[index].owner, 720 ether));
             remove(index);
             emit Winner(index, nftInfoo[index]);
-    emit claimed( nftInfoo[index].owner ,index, 720 ether, block.timestamp,FxStateChildTunnel.SEND_MESSAGE_EVENT_SIG() );
-
+            emit claimed( nftInfoo[index].owner ,index, 720 ether, block.timestamp,FxStateChildTunnel.SEND_MESSAGE_EVENT_SIG() );
         }
         uint dDays = (block.timestamp.sub(timer.sub(FIXED_DURATION))).div(FIXED_DURATION);
         timer = timer.add(dDays.mul(FIXED_DURATION));
@@ -187,7 +186,10 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
 
             if (nftInfoo[index].favourVotes >= votesTarget) {
                 nftInfoo[index].blackListed = true;
-            emit blackListed( index, decision, nftInfoo[index]);
+
+                remove(index);
+
+                emit blackListed( index, decision, nftInfoo[index]);
             }
 
             // emit CommitteeVote(msg.sender, index, decision, nftStore[index]);
