@@ -134,32 +134,32 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
     }
 
     function claim(uint index) public {
-    require(nftInfoo[index].winnerStatus == true,"Can't Claim");
-    require( voteCheck[index][msg.sender] == true, "You have not voted");
-    require( isclaimed[index][msg.sender]== false , "Already Claimed" );
+        require(nftInfoo[index].winnerStatus == true,"Can't Claim");
+        require( voteCheck[index][msg.sender] == true, "You have not voted");
+        require( isclaimed[index][msg.sender] == false , "Already Claimed" );
 
-    uint  amount = 180 ether/ (nftInfoo[index].votersCount);
-    FxStateChildTunnel.sendMessageToRoot(abi.encode(msg.sender,amount));
-    
-    isclaimed[index][msg.sender]=  true;
-    emit claimed(msg.sender , index, amount, block.timestamp, FxStateChildTunnel.SEND_MESSAGE_EVENT_SIG() );
+        uint  amount = 180 ether/ (nftInfoo[index].votersCount);
+        FxStateChildTunnel.sendMessageToRoot(abi.encode(msg.sender,amount));
+        
+        isclaimed[index][msg.sender] =  true;
+        emit claimed(msg.sender , index, amount, block.timestamp, FxStateChildTunnel.SEND_MESSAGE_EVENT_SIG() );
     }
 
 
     function claimBatch(uint[] memory indexes) public {
-    uint totalAmount;
-    for(uint i; i < indexes.length; ++i) {
-        require(nftInfoo[indexes[i]].winnerStatus == true, "Can't Claim");
-        require( voteCheck[indexes[i]][msg.sender] == true, "You have not voted" );
-        require( isclaimed[indexes[i]][msg.sender] == false,"Already Claimed");
-        uint amount = nftInfoo[indexes[i]].votersCount;
-        totalAmount += amount;
-        isclaimed[indexes[i]][msg.sender] = true;
-        emit claimed(msg.sender,indexes[i], 720 ether,block.timestamp, FxStateChildTunnel.SEND_MESSAGE_EVENT_SIG());
-    }
-    FxStateChildTunnel.sendMessageToRoot(
-        abi.encode(msg.sender, totalAmount)
-    );
+        uint totalAmount;
+        for(uint i; i < indexes.length; ++i) {
+            require(nftInfoo[indexes[i]].winnerStatus == true, "Can't Claim");
+            require( voteCheck[indexes[i]][msg.sender] == true, "You have not voted" );
+            require( isclaimed[indexes[i]][msg.sender] == false,"Already Claimed");
+            uint amount = nftInfoo[indexes[i]].votersCount;
+            totalAmount += amount;
+            isclaimed[indexes[i]][msg.sender] = true;
+            emit claimed(msg.sender,indexes[i], 720 ether,block.timestamp, FxStateChildTunnel.SEND_MESSAGE_EVENT_SIG());
+        }
+        FxStateChildTunnel.sendMessageToRoot(
+            abi.encode(msg.sender, totalAmount)
+        );
     }
 
     function updateDaoCommitteeAddress(IDaoCommittee _address) external onlyOwner {
@@ -176,8 +176,8 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
 
     function blackListArt(uint index, bool decision) public  {
         require(nftInfoo[index].isBlackListed == false,"Already Blacklisted");
-        require (daoCommittee.Committee(msg.sender)== true,"Only Committee Member can call");
-        uint votesTarget = (daoCommittee.committeeMembersCounter() / 2) + 1;
+        require (daoCommittee.Committee(msg.sender) == true,"Only Committee Member can call");
+        uint votesTarget = ( daoCommittee.committeeMembersCounter() / 2) + 1;
 
         // require either favour /disfavour votes < target votes, "already checked"
         require(nftInfoo[index].favourVotes < votesTarget || nftInfoo[index].disApprovedVotes < votesTarget,"already voted for check");

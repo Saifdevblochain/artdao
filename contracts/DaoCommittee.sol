@@ -3,9 +3,11 @@ pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "./IDaoPublic.sol";
 
 contract DaoCommittee is Initializable, OwnableUpgradeable {
+    using SafeMath for uint;
     uint private nftIndex;
     uint public committeeMembersCounter;
     IDaoPublic public DaoPublic;
@@ -35,11 +37,11 @@ contract DaoCommittee is Initializable, OwnableUpgradeable {
 
     function initialize () public initializer { 
         __Ownable_init();
-        Committee[msg.sender] = true;
+        Committee [msg.sender] = true;
         committeeMembersCounter++;
     }
 
-    function addNfts(string calldata uri_) public {
+    function addNfts ( string  calldata uri_ ) external {
         nftStore[nftIndex] = NFT(uri_,msg.sender,0,0,false,false);
         emit NftAdded(nftIndex, nftStore[nftIndex], block.timestamp);
         nftIndex++;
@@ -49,12 +51,12 @@ contract DaoCommittee is Initializable, OwnableUpgradeable {
     function voteByCommittee(uint index, bool decision) public onlyComittee {
         DaoPublic.announceWinner();
         // require(committeeVoteCheck[index][msg.sender] == 0, " Already Voted ");
-        require(nftStore[index].owner != address(0), "NFT doesnot exist");
-        require(nftStore[index].isApprovedByCommittee==false, "NFT already approved");
-        require(nftStore[index].rejected == false, "NFT Rejected");
-        uint votesTarget = (committeeMembersCounter / 2) + 1;
+        require ( nftStore[index].owner != address(0), "NFT doesnot exist");
+        require ( nftStore[index].isApprovedByCommittee == false, "NFT already approved" );
+        require( nftStore[index].rejected == false , "NFT Rejected");
+        uint votesTarget = ( committeeMembersCounter .div(2) ).add ( 1 );
 
-        if(committeeVoteCheck[index][msg.sender] == 0){
+        if( committeeVoteCheck[index][msg.sender] == 0 ){
             if (decision == true) {
                 nftStore[index].approvedVotes++;
                 committeeVoteCheck[index][msg.sender] = 1;
