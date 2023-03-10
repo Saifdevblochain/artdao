@@ -1,25 +1,7 @@
-Committee:
+committee:
 
-Implementation 0x6dCf5d7Dc9AAC9919198bDebeF48Ef7F37523cd8 already verified.
-Verifying proxy: 0xb2fcd4815Dd43F1353B88aC175A8B87Ac9290Efb
-Contract at 0xb2fcd4815Dd43F1353B88aC175A8B87Ac9290Efb already verified.
-Linking proxy 0xb2fcd4815Dd43F1353B88aC175A8B87Ac9290Efb with implementation
-Successfully linked proxy to implementation.
-Verifying proxy admin: 0xE4b328BA044bD23802F6C48424d124367cBeE756
-Contract at 0xE4b328BA044bD23802F6C48424d124367cBeE756 already verified. 
-
-Public:
-
-https://mumbai.polygonscan.com/address/0x90e08cB2C5DAc4E6829FE868c3d3Ca5D668EB104#code
-Verifying proxy: 0x03de193dCba0888f10E0C60c3B2CCca11B372dcE
-Contract at 0x03de193dCba0888f10E0C60c3B2CCca11B372dcE already verified.
-Linking proxy 0x03de193dCba0888f10E0C60c3B2CCca11B372dcE with implementation
-Successfully linked proxy to implementation.
-Verifying proxy admin: 0xE4b328BA044bD23802F6C48424d124367cBeE756
-Contract at 0xE4b328BA044bD23802F6C48424d124367cBeE756 already verified
+0x7Bc16aB8336677feC6F1BDB6C22d731966255304
 
 
-
-0x96d2cc9E3c1Ea954aa67Db266a0a79F06E007012\
-
-0x2F78aB0Cd05c6f38B6aFfcdFa3028ADA8b9b4569
+Public
+0x262FdD36BbEeFb72762091b6A8ba18E8758dF323
