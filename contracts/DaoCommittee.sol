@@ -79,7 +79,7 @@ contract DaoCommittee is Initializable, OwnableUpgradeable {
         }else if(committeeVoteCheck[index][msg.sender] == 1 && decision == false){
             nftStore[index].rejectedVotes++;
             nftStore[index].approvedVotes--;
-            committeeVoteCheck[index][msg.sender] == 2;
+            committeeVoteCheck[index][msg.sender] = 2;
             if (nftStore[index].rejectedVotes >= votesTarget) {
                     nftStore[index].isApprovedByCommittee = false;
                     nftStore[index].rejected =true;
@@ -89,7 +89,7 @@ contract DaoCommittee is Initializable, OwnableUpgradeable {
         }else if(committeeVoteCheck[index][msg.sender] == 2 && decision == true){
             nftStore[index].rejectedVotes--;
             nftStore[index].approvedVotes++;
-            committeeVoteCheck[index][msg.sender] == 1;
+            committeeVoteCheck[index][msg.sender] = 1;
             if (nftStore[index].approvedVotes >= votesTarget) {
                 nftStore[index].isApprovedByCommittee = true;
                 DaoPublic.addInfo(nftStore[index].uri, nftStore[index].owner, true);

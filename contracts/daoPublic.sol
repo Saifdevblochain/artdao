@@ -175,19 +175,18 @@ contract DaoPublic is Initializable, LinkedList, OwnableUpgradeable {
         uint votesTarget = ( daoCommittee.committeeMembersCounter() / 2) + 1;
 
         // require either favour /disfavour votes < target votes, "already checked"
-        require(nftInfoo[index].favourVotes < votesTarget || nftInfoo[index].disApprovedVotes < votesTarget,"already voted for check");
+        require(nftInfoo[index].favourVotes < votesTarget || nftInfoo[index].disApprovedVotes < votesTarget,"Already voted for this art");
         if (block.timestamp >= timer) {
             _announceWinner();
         }
 
         if (decision == true) {
             nftInfoo[index].favourVotes++;
-
             if (nftInfoo[index].favourVotes >= votesTarget) {
                 nftInfoo[index].isBlackListed = true;
-
-                remove(index);
-
+                if(nftInfoo[index].votes > 0){
+                   remove(index);
+                }
                 emit blackListed( index, decision, nftInfoo[index]);
             }
             emit voteForBlackList(msg.sender , index, decision , nftInfoo[index]);

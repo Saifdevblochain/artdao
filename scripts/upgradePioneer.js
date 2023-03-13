@@ -1,13 +1,13 @@
 const { ethers, upgrades } = require("hardhat");
 
 async function main() {
-  const DaoPublicTest = await ethers.getContractFactory(
-    "DaoPublicTest"
+  const DaoCommittee = await ethers.getContractFactory(
+    "DaoCommittee"
   );
-  console.log("Upgrading DaoPublicTest...");
+  console.log("Upgrading DaoCommittee...");
   await upgrades.upgradeProxy(
-    "0x352fAcf2c6b66Be0B40cCc01E64C9d7F038Cdc6f", // old address
-    DaoPublicTest
+    "0x7Bc16aB8336677feC6F1BDB6C22d731966255304", // old address
+    DaoCommittee
   );
   console.log("Upgraded Successfully");
 }
