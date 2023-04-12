@@ -12,7 +12,7 @@ async function verify(address, constructorArguments) {
 
 
 async function main() {
-  let DaoCommittee_ = "0xDEA14d84Fcc1AF72A52099693B2986cF053CCA4f"
+  let DaoCommittee_ = "0x79Ac5B72D7B847Dd2310fBa7E2E1EAA73E812414"
   let timer_= 300
   let FIXED_DURATION= 300;
   const DaoPublic = await ethers.getContractFactory(

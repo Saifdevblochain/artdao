@@ -1,7 +1,8 @@
 committee:
-
-0x7Bc16aB8336677feC6F1BDB6C22d731966255304
+https://mumbai.polygonscan.com/address/0x79Ac5B72D7B847Dd2310fBa7E2E1EAA73E812414#readProxyContract
 
 
 Public
-0x262FdD36BbEeFb72762091b6A8ba18E8758dF323
+https://mumbai.polygonscan.com/address/0x12f55DD8C51d38f3489F92065db19E3Ff57940A0#readProxyContract
+
+

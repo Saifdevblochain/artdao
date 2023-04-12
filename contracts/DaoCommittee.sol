@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "./IDaoPublic.sol";
 
-contract DaoCommittee is Initializable, OwnableUpgradeable {
-    using SafeMath for uint;
+contract DaoCommittee is  OwnableUpgradeable {
     uint private nftIndex;
     uint public committeeMembersCounter;
     IDaoPublic public DaoPublic;
@@ -29,6 +27,8 @@ contract DaoCommittee is Initializable, OwnableUpgradeable {
 
     event NftAdded(uint index, NFT NFT, uint uploadTime);
     event CommitteeVote(address committeeMember, uint index, bool decision, NFT _NFT);
+    using SafeMath for uint;
+
 
     modifier onlyComittee() {
         require(Committee[msg.sender] == true, "Not Committee Member");

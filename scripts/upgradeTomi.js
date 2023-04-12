@@ -6,7 +6,7 @@ async function main() {
   );
   console.log("Upgrading DaoPublic...");
   await upgrades.upgradeProxy(
-    "0x03de193dCba0888f10E0C60c3B2CCca11B372dcE", // old address
+    "0x927B8c62E1d85A99F6537F8182Ee44fB964C9611", // old address
     DaoPublic
   );
   console.log("Upgraded Successfully");
